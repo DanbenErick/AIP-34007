@@ -1,16 +1,47 @@
 <template>
-  <div class="grid-container full vh-100 flex-center">
-    <div class="card" style="padding: 2rem; max-width: 400px; width: 100%;">
-      <h4 class="text-center">Iniciar Sesión</h4>
-      <form @submit.prevent="login">
-        <label>DNI
-          <input v-model="dni" type="text" placeholder="Ingrese su DNI" required />
-        </label>
-        <label>Contraseña
-          <input v-model="password" type="password" placeholder="Contraseña" required />
-        </label>
-        <button type="submit" class="button expanded">Entrar</button>
-      </form>
+  <!-- Fondo fijo -->
+  <div class="fondo-login"></div>
+
+  <!-- Grid centrado -->
+  <div class="ui middle aligned center aligned grid" style="height: 100vh;">
+    <div class="column" style="max-width: 500px;">
+
+      <!-- Contenedor tipo box -->
+      <div class="ui raised very padded text container segment">
+
+        <!-- Título centrado -->
+        <h2 class="ui teal header center aligned">
+          Iniciar Sesión
+        </h2>
+
+        <!-- Formulario -->
+        <form class="ui large form" @submit.prevent="login">
+          <div class="ui stacked segment">
+
+            <!-- Campo DNI -->
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input v-model="dni" type="text" placeholder="Ingrese su DNI" required />
+              </div>
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input v-model="password" type="password" placeholder="Contraseña" required />
+              </div>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="ui fluid large teal submit button">Entrar</button>
+          </div>
+        </form>
+
+        <!-- Mensaje inferior -->
+        <div class="ui message center aligned">Sistema de Acceso Personalizado</div>
+      </div>
     </div>
   </div>
 </template>
@@ -68,17 +99,33 @@ const login = () => {
 </script>
 
 <style scoped>
-.vh-100 {
+body {
+  background-color: #f0f0f0;
+}
+
+.fondo-login {
+  position: fixed;
+  background: url('/fondo.png'); /* Imagen desde public */
+  width: 100%;
   height: 100vh;
+  background-size: cover;
+  background-position: center;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Fondo detrás del contenido */
 }
 
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ui.raised.segment {
+  background-color: white !important; /* Fondo blanco para resaltar */
+  border-radius: 15px !important; /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Sombra suave */
 }
 
-.card {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.ui.header {
+  margin-bottom: 30px !important;
+}
+
+.ui.message {
+  margin-top: 20px !important;
 }
 </style>
