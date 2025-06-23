@@ -11,7 +11,7 @@
 
         <!-- Título centrado -->
         <h2 class="ui teal header center aligned">
-          Iniciar Sesión
+          <img src="/ing.jpg" alt="Insignia">
         </h2>
 
         <!-- Formulario -->
