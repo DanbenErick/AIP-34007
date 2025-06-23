@@ -40,7 +40,7 @@
         </form>
 
         <!-- Mensaje inferior -->
-        <div class="ui message center aligned">Sistema de Acceso Personalizado</div>
+        <div class="ui message center aligned">Acceso para estudiantes de la IE</div>
       </div>
     </div>
   </div>
