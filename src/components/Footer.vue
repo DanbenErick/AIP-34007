@@ -13,7 +13,7 @@
             rel="noopener noreferrer"
             class="ui circular facebook icon button"
           >
-            <i class="facebook f icon"></i>
+            <i class="fab fa-facebook-f"></i>
           </a>
         </div>
       </div>
