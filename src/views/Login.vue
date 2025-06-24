@@ -10,9 +10,7 @@
       <div class="ui raised very padded text container segment">
 
         <!-- Título centrado -->
-        <h2 class="ui teal header center aligned">
-          <img src="/ing.jpg" alt="Insignia">
-        </h2>
+        <img src="/ing.jpg" alt="Insignia" style="width: 200px;">
 
         <!-- Formulario -->
         <form class="ui large form" @submit.prevent="login">
@@ -39,31 +37,42 @@
           </div>
         </form>
 
-        <!-- Mensaje inferior -->
-        <div class="ui message center aligned">Acceso para estudiantes de la IE</div>
       </div>
     </div>
   </div>
+
+  <!-- Alerta personalizada -->
+  <CustomAlert
+    :visible="alertaVisible"
+    :title="alertaTitulo"
+    :message="alertaMensaje"
+    @close="alertaVisible = false"
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import CustomAlert from '../components/CustomAlert.vue' // Asegúrate de tener el componente
 
 const dni = ref('')
 const password = ref('')
 const estudiantes = ref([])
 const router = useRouter()
 
+// Alertas personalizadas
+const alertaVisible = ref(false)
+const alertaTitulo = ref('')
+const alertaMensaje = ref('')
+
 // Leer el CSV al cargar la página
 const cargarEstudiantes = async () => {
   const response = await fetch('/data/estudiantes.csv')
   const csvData = await response.text()
-  console.log(parseCSV(csvData))
   estudiantes.value = parseCSV(csvData)
 }
 
-// Convertir CSV en un array de objetos
+// Convertir CSV en array de objetos
 const parseCSV = (csv) => {
   const lines = csv.trim().split('\n')
   const headers = lines[0].split(';')
@@ -73,7 +82,6 @@ const parseCSV = (csv) => {
     headers.forEach((header, index) => {
       estudiante[header.trim()] = data[index].trim()
     })
-    
     return estudiante
   })
 }
@@ -82,18 +90,20 @@ cargarEstudiantes()
 
 // Validar Login
 const login = () => {
-  console.log(estudiantes)
-  const usuario = estudiantes.value.find((est) => {
-    console.log(est.DNI, dni.value)
-    return est.DNI === dni.value
-  })
+  const usuario = estudiantes.value.find((est) => est.DNI === dni.value)
   if (usuario) {
-    alert(`Bienvenido ${usuario.NOMBRE_COMPLETO}`)
+    alertaTitulo.value = '¡Bienvenido!'
+    alertaMensaje.value = usuario.NOMBRE_COMPLETO
+    alertaVisible.value = true
     localStorage.setItem('NOMBRE_COMPLETO', usuario.NOMBRE_COMPLETO)
     localStorage.setItem('DNI', usuario.DNI)
-    router.push('/home')
+    setTimeout(() => {
+      router.push('/home')
+    }, 1500) // Pequeña pausa para que vea la alerta
   } else {
-    alert('DNI o contraseña incorrectos')
+    alertaTitulo.value = 'Error'
+    alertaMensaje.value = 'DNI o contraseña incorrectos'
+    alertaVisible.value = true
   }
 }
 </script>
@@ -105,20 +115,20 @@ body {
 
 .fondo-login {
   position: fixed;
-  background: url('/fondo.png'); /* Imagen desde public */
+  background: url('/fondo.png');
   width: 100%;
   height: 100vh;
   background-size: cover;
   background-position: center;
   top: 0;
   left: 0;
-  z-index: -1; /* Fondo detrás del contenido */
+  z-index: -1;
 }
 
 .ui.raised.segment {
-  background-color: white !important; /* Fondo blanco para resaltar */
-  border-radius: 15px !important; /* Esquinas redondeadas */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Sombra suave */
+  background-color: white !important;
+  border-radius: 15px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
 .ui.header {

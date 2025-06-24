@@ -36,7 +36,7 @@
         <!-- Sección de Videos -->
         <div v-if="videos.length > 0" style="margin-top: 40px;">
           <div class="section-header">
-            <h2>Imágenes</h2>
+            <h2>Videos</h2>
             <div class="section-divider"></div>
           </div>
           <div class="ui three stackable cards">
@@ -49,7 +49,7 @@
         <!-- Sección de PDFs -->
         <div v-if="pdfs.length > 0" style="margin-top: 40px;">
           <div class="section-header">
-            <h2>Imágenes</h2>
+            <h2>Documentos PDF</h2>
             <div class="section-divider"></div>
           </div>
           <div class="ui three stackable cards">
@@ -66,6 +66,7 @@
     </div>
 
   </div>
+  <Footer />
 </template>
 
 <style scoped>
@@ -137,6 +138,7 @@ h3.ui.header {
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import Navbar from '../components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 const nombreUsuario = ref('')
 const archivos = ref([])
